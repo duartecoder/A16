@@ -1,106 +1,39 @@
-import javax.swing.*;
-import java.awt.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-// Classe responsável pela inicialização e configuração do sistema
+// Classe responsável por inicializar a aplicação
 public class SistemaPessoa {
-    
     public static void main(String[] args) {
-        // Cria o sistema e inicializa
+        // Inicia a aplicação criando o menu principal
         Sistema sistema = new Sistema();
-        sistema.iniciarSistema();
+        sistema.iniciar();
     }
 }
 
-// Classe que representa o Sistema Pessoa
+// Classe que representa o sistema
 class Sistema {
-    private JFrame principal;
-    private JMenuBar menuPrincipal;
-    private JTextArea areaTrabalho;
-    private JPanel painelRodape;
-    
-    private final String versaoSistema = "12.1.2024";
-    private final String nomeUsuario = "denys.silva";
-    private final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
-    private final String dataAcesso = dateFormat.format(new Date());
+    private MenuPrincipal menuPrincipal;
 
-    // Construtor do Sistema
+    // Construtor do sistema
     public Sistema() {
-        this.principal = new JFrame("Sistema Pessoa");
-        this.menuPrincipal = new JMenuBar();
-        this.areaTrabalho = new JTextArea();
-        this.painelRodape = new JPanel();
+        menuPrincipal = new MenuPrincipal(); // Cria o menu principal
     }
 
     // Método para iniciar o sistema
-    public void iniciarSistema() {
-        configurarJanela();
-        configurarMenu();
-        configurarRodape();
-        mostrarJanela();
+    public void iniciar() {
+        menuPrincipal.mostrarMenu(); // Exibe o menu principal
+    }
+}
+
+// Classe responsável pelo menu principal da aplicação
+class MenuPrincipal {
+    // Construtor do MenuPrincipal
+    public MenuPrincipal() {
+        // Aqui você pode inicializar qualquer coisa relacionada ao menu
+        System.out.println("Menu Principal Inicializado.");
     }
 
-    // Configura o JFrame principal
-    private void configurarJanela() {
-        principal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        principal.setSize(800, 800);
-        principal.setLocationRelativeTo(null); // Centraliza a janela
-    }
-
-    // Configura a barra de menu
-    private void configurarMenu() {
-        // Criar menus principais
-        JMenu menuCadastro = new JMenu("Cadastro");
-        JMenu menuVisualizacao = new JMenu("Visualização");
-        JMenu menuSair = new JMenu("Sair");
-        
-        // Adicionar ouvintes de evento no menu "Sair"
-        menuSair.addMenuListener(new javax.swing.event.MenuListener() {
-            @Override
-            public void menuSelected(javax.swing.event.MenuEvent e) {
-                System.exit(0); // Sai do sistema
-            }
-
-            @Override
-            public void menuDeselected(javax.swing.event.MenuEvent e) {}
-
-            @Override
-            public void menuCanceled(javax.swing.event.MenuEvent e) {}
-        });
-
-        // Criar itens do menu de cadastro
-        JMenuItem itemMenuCadastroUsuarios = new JMenuItem("Usuários");
-        JMenuItem itemMenuCadastroPessoas = new JMenuItem("Pessoas");
-        menuCadastro.add(itemMenuCadastroUsuarios);
-        menuCadastro.add(itemMenuCadastroPessoas);
-        
-        // Criar itens do menu de visualização
-        JMenuItem itemMenuVisualizacaoListaUsuarios = new JMenuItem("Lista de usuários");
-        JMenuItem itemMenuVisualizacaoListaPessoas = new JMenuItem("Lista de pessoas");
-        menuVisualizacao.add(itemMenuVisualizacaoListaUsuarios);
-        menuVisualizacao.add(itemMenuVisualizacaoListaPessoas);
-        
-        // Adicionar menus na barra de menu
-        menuPrincipal.add(menuCadastro);
-        menuPrincipal.add(menuVisualizacao);
-        menuPrincipal.add(menuSair);
-        
-        // Configurar a barra de menu
-        principal.getContentPane().add(BorderLayout.NORTH, menuPrincipal);
-        principal.getContentPane().add(BorderLayout.CENTER, areaTrabalho);
-    }
-
-    // Configura o rodapé
-    private void configurarRodape() {
-        JLabel labelRodape = new JLabel("Versão: " + versaoSistema + "               Usuário: " + nomeUsuario + "               Data de acesso: " + dataAcesso);
-        painelRodape.add(labelRodape);
-        principal.getContentPane().add(BorderLayout.SOUTH, painelRodape);
-    }
-
-    // Exibe a janela principal
-    private void mostrarJanela() {
-        principal.setVisible(true);
+    // Método para exibir o menu
+    public void mostrarMenu() {
+        System.out.println("Exibindo Menu Principal...");
+        // Aqui você pode adicionar lógica para criar o menu na interface gráfica
+        // Exemplo: criar itens de menu, associar eventos, etc.
     }
 }
