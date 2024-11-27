@@ -1,39 +1,65 @@
-// Classe responsável por inicializar a aplicação
+import javax.swing.*;
+import java.awt.*;
+
 public class SistemaPessoa {
+
     public static void main(String[] args) {
-        // Inicia a aplicação criando o menu principal
-        Sistema sistema = new Sistema();
-        sistema.iniciar();
-    }
-}
-
-// Classe que representa o sistema
-class Sistema {
-    private MenuPrincipal menuPrincipal;
-
-    // Construtor do sistema
-    public Sistema() {
-        menuPrincipal = new MenuPrincipal(); // Cria o menu principal
+        new SistemaPessoa().iniciarSistema();
     }
 
-    // Método para iniciar o sistema
-    public void iniciar() {
-        menuPrincipal.mostrarMenu(); // Exibe o menu principal
-    }
-}
+    public void iniciarSistema() {
+        JFrame principal = new JFrame("Sistema Pessoa");
+        principal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        principal.setSize(800, 800);
 
-// Classe responsável pelo menu principal da aplicação
-class MenuPrincipal {
-    // Construtor do MenuPrincipal
-    public MenuPrincipal() {
-        // Aqui você pode inicializar qualquer coisa relacionada ao menu
-        System.out.println("Menu Principal Inicializado.");
-    }
+        JMenuBar menuPrincipal = new JMenuBar();
+        JMenu menuCadastro = new JMenu("Cadastro");
+        JMenu menuVisualizacao = new JMenu("Visualização");
+        JMenu menuSair = new JMenu("Sair");
 
-    // Método para exibir o menu
-    public void mostrarMenu() {
-        System.out.println("Exibindo Menu Principal...");
-        // Aqui você pode adicionar lógica para criar o menu na interface gráfica
-        // Exemplo: criar itens de menu, associar eventos, etc.
+        menuSair.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuSelected(javax.swing.event.MenuEvent e) {
+                System.exit(0);
+            }
+
+            public void menuDeselected(javax.swing.event.MenuEvent e) {}
+
+            public void menuCanceled(javax.swing.event.MenuEvent e) {}
+        });
+
+        menuPrincipal.add(menuCadastro);
+        menuPrincipal.add(menuVisualizacao);
+        menuPrincipal.add(menuSair);
+
+        JMenuItem itemMenuCadastroUsuarios = new JMenuItem("Usuários");
+        JMenuItem itemMenuCadastroPessoas = new JMenuItem("Pessoas");
+        menuCadastro.add(itemMenuCadastroUsuarios);
+        menuCadastro.add(itemMenuCadastroPessoas);
+
+        JMenuItem itemMenuVisualizacaoListaUsuarios = new JMenuItem("Lista de usuários");
+        JMenuItem itemMenuVisualizacaoListaPessoas = new JMenuItem("Lista de pessoas");
+        menuVisualizacao.add(itemMenuVisualizacaoListaUsuarios);
+        menuVisualizacao.add(itemMenuVisualizacaoListaPessoas);
+
+        JTextArea areaTrabalho = new JTextArea();
+        JPanel painelRodape = new JPanel();
+        JLabel labelRodape = new JLabel(
+            "Versão: " + ConfiguracoesSistema.VERSAO_SISTEMA +
+            "    Usuário: " + ConfiguracoesSistema.NOME_USUARIO +
+            "    Data de acesso: " + ConfiguracoesSistema.DATA_ACESSO
+        );
+        painelRodape.add(labelRodape);
+
+        principal.getContentPane().add(BorderLayout.NORTH, menuPrincipal);
+        principal.getContentPane().add(BorderLayout.CENTER, areaTrabalho);
+        principal.getContentPane().add(BorderLayout.SOUTH, painelRodape);
+
+        itemMenuCadastroUsuarios.addActionListener(e -> new CadastroUsuarios(principal).exibir());
+        itemMenuCadastroPessoas.addActionListener(e -> new CadastroPessoas(principal).exibir());
+        itemMenuVisualizacaoListaUsuarios.addActionListener(e -> new ListaUsuarios(principal).exibir());
+        itemMenuVisualizacaoListaPessoas.addActionListener(e -> new ListaPessoas(principal).exibir());
+
+        principal.setLocationRelativeTo(null);
+        principal.setVisible(true);
     }
 }
